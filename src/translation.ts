@@ -46,11 +46,12 @@ const options = {
             const local = locals[lng].translation || {};
               try {
                 const parseData = csvToJson(data);
-                if(lng !== 'en'){
-                  return local;
-                }
+                // console.log(parseData);
+                // if(lng !== 'en'){
+                //   return local;
+                // }
                 const res = {...local, ...parseData}; // Trả về dữ liệu từ API
-                console.log(res);
+                console.log(res, lng);
                 return res; // Trả về dữ liệu từ API
               } catch (e) {
                   console.error('Error parsing translation data:', e);
@@ -61,7 +62,7 @@ const options = {
   ],
 }
 
-let currentLanguage = localStorage.getItem('language') || 'en';
+let currentLanguage = 'en';
 
 const config = async () => {
   await i18n
