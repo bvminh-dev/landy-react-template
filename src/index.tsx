@@ -1,17 +1,28 @@
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
-import { I18nextProvider } from "react-i18next";
 import "antd/dist/antd.css";
 
 import Router from "./router";
 import i18n from "./translation";
+import { useEffect, useState } from "react";
+import Loading from "./components/Loading";
 
-const App = () => (
-  <BrowserRouter>
-    <I18nextProvider i18n={i18n}>
+const App = () => {
+  const [isI18nReady, setI18nReady] = useState(false);
+
+  useEffect(() => {
+    i18n.config().finally(() => setI18nReady(true));
+  }, []);
+
+  if (!isI18nReady) {
+    return <Loading />;
+  }
+
+  return (
+    <BrowserRouter>
       <Router />
-    </I18nextProvider>
-  </BrowserRouter>
-);
+    </BrowserRouter>
+  );
+};
 
 ReactDOM.render(<App />, document.getElementById("root"));
